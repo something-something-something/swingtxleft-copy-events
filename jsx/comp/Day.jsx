@@ -4,7 +4,7 @@ class Day extends React.Component {
 			return <Event key={this.props.dayData.day + el.id} event={el} day={this.props.dayData.day} />
 		})
 		return <div>
-			<h1>{this.props.dayData.day}</h1>
+			<h1 style={{textAlign:'center',borderWidth:'0 0 0.5em 0',borderStyle:'solid'}}>{this.props.dayData.day}</h1>
 			{events}
 		</div>
 	}
@@ -181,7 +181,7 @@ class Event extends React.Component {
 class TimeslotMonth extends React.Component {
 
 	render() {
-	return <div><u>{this.props.monthData.monthStr} {this.props.monthData.year}:</u> {this.timeslots()}</div>
+	return (<div style={{padding:'0.5em 0'}}><u>{this.props.monthData.monthStr} {this.props.monthData.year}:</u> {this.timeslots()}</div>)
 	}
 
 	timeslots() {

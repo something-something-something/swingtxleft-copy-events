@@ -48,7 +48,10 @@ class Events extends React.Component {
 		});
 
 		let dayComp = eventDays.map((day) => { return <Day dayData={day} key={day.day} /> })
-		return <div><button onClick={this.copyEvents}>Copy Events</button><div ref={this.dayListRef}>{dayComp}</div></div>;
+		return (<div>
+					<button onClick={this.copyEvents}>Copy Events</button><button onClick={this.copyEventsHTML}>Copy Events As HTML</button>
+					<div ref={this.dayListRef}>{dayComp}</div>
+				</div>);
 		//return <pre>{JSON.stringify(this.props.eventData,null,'\t')}</pre>
 	}
 	dayTest(day) {
@@ -62,10 +65,14 @@ class Events extends React.Component {
 		super(props);
 		this.dayListRef=React.createRef();
 		this.copyEvents=this.copyEvents.bind(this);
+		this.copyEventsHTML=this.copyEventsHTML.bind(this);
 	}
 
 	async copyEvents(){
 		window.getSelection().selectAllChildren(this.dayListRef.current);
 		document.execCommand('copy');
+	}
+	async copyEventsHTML(){
+		await navigator.clipboard.writeText(this.dayListRef.current.innerHTML);
 	}
 }
