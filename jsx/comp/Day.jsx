@@ -145,8 +145,8 @@ class Event extends React.Component {
 
 		}
 
-		console.log(this.props.event.title)
-		console.log(monthArr);
+		//console.log(this.props.event.title)
+		//console.log(monthArr);
 
 
 
