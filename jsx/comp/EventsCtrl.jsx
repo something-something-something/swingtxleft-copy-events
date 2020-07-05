@@ -19,7 +19,7 @@ class EventsCtrl extends React.Component {
 	async getSwtxlData() {
 		let dataUrl = 'https://api.mobilize.us/v1/organizations/210/events?timeslot_end=gte_now';
 		if (this.state.endDate !== null) {
-			dataUrl += '&timeslot_end=lte_' + Math.floor(this.state.endDate.getTime() / 1000);
+			dataUrl += '&timeslot_end=lte_' + (Math.floor(this.state.endDate.getTime() / 1000) + (24 * 60 * 60));
 		}
 		else {
 			console.log('no action');
@@ -33,8 +33,17 @@ class EventsCtrl extends React.Component {
 	}
 
 	setEndDate(event) {
-		let theEndDate = new Date(event.target.value);
-		theEndDate = new Date(theEndDate.getTime() + (24 * 60 * 60 * 1000));
+		let dateParts=event.target.value.split('-').map((el,index)=>{
+			if(index===1){
+				return parseInt(el,10)-1;
+			}
+			else{
+				return parseInt(el,10);
+			}
+		})
+		let theEndDate = new Date(dateParts[0],dateParts[1],dateParts[2]);
+		console.log(theEndDate);
+		//theEndDate = new Date(theEndDate.getTime() + (24 * 60 * 60 * 1000));
 		this.setState({
 			endDate: theEndDate
 			// eventData:this.getSwtxlData()
@@ -125,23 +134,27 @@ class EventsCtrl extends React.Component {
 			//let eventData=await getSwtxlData() 
 			return (
 				<div>
-					<label>End Date:
+					<label>Hide Events Starting After:
 						{this.state.endDate === null
 							? <input onChange={this.setEndDate} type="date" value="" />
-							: <input onChange={this.setEndDate} type="date" value={new Date(this.state.endDate.getTime() - (24 * 60 * 60 * 1000)).toISOString().split('T')[0]} />
+							: <input onChange={this.setEndDate} type="date" value={this.state.endDate.toISOString().split('T')[0]} />
 						}
 					</label>
 					<button onClick={this.unsetEndDate}>Reset Date</button>
-					<div>
+					<div style={{margin:'1rem 0'}}>
 						<button onClick={this.toggleShowExclusionList} >
 							{this.state.showEventExcluderList
-								? 'Close Hide Events Menu'
-								: 'Hide Events Menu'
+								? 'Done Selecting Events to Hide'
+								: 'Select Events to Hide '
 							}
 							
-						</button><button onClick={this.resetExcludedEvents} >Show All Events</button>
+						</button>
 						{this.state.showEventExcluderList &&
-							<div><h2>Click Event to hide Display of event</h2> <ul>{this.eventExclusionList()}</ul></div>
+							<div style={{backgroundColor:'rgb(200,200,200)'}}>
+								<h2>Click Event to hide Display of event</h2>
+								<button onClick={this.resetExcludedEvents} >Show All Events</button> 
+								<ul>{this.eventExclusionList()}</ul>
+							</div>
 						}
 					</div>
 					<Events eventData={this.state.eventData} excludedEvents={this.state.excludedEvents} />
@@ -154,10 +167,10 @@ class EventsCtrl extends React.Component {
 
 function EventExcluderListItem(props) {
 
-	return (<li style={{ margin:'1rem'}} onClick={props.action} title={props.eventDescription+'\n\n'+props.eventTimes.join('\n')}>
+	return (<li style={{ padding:'0.5rem'}} onClick={props.action} title={props.eventDescription+'\n\n'+props.eventTimes.join('\n')}>
 		{!props.excluded
 			? <span>{props.title}</span>
-			: <s>{props.title}</s>
+			: <s style={{color:'rgb(255,0,0)'}}>{props.title}</s>
 		}
 		</li>
 	);
