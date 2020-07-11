@@ -4,7 +4,8 @@ class Day extends React.Component {
 			return <Event key={this.props.dayData.day + el.id} event={el} day={this.props.dayData.day} />
 		})
 		return <div>
-			<h1 style={{textAlign:'center',borderWidth:'0 0 0.5em 0',borderStyle:'solid'}}>{this.props.dayData.day}</h1>
+			<h1 style={{textAlign:'center',borderWidth:'0 0 0.5em 0',borderStyle:'solid',borderColor:'#34c1f0'}}>{this.props.dayData.day}</h1>
+			<br/>
 			{events}
 		</div>
 	}
@@ -217,6 +218,7 @@ class TimeslotMonth extends React.Component {
 			}
 		}
 		return timeArr.map((el, index, arr) => {
+			//only last timeslot should have comma
 			if (index !== arr.length - 1) {
 				return <span key={el.timeslot.id}> {el.value}, </span>;
 			}
