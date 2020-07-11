@@ -180,7 +180,7 @@ class EventsCtrl extends React.Component {
 						{this.state.showEventExcluderList &&
 							<div style={{ backgroundColor: 'rgb(200,200,200)' }}>
 								<h2>Click Event to hide Display of event</h2>
-								<button onClick={this.resetExcludedEvents} >Show All Events</button>
+								<button onClick={this.resetExcludedEvents} >Reset</button>
 								<ul>{this.eventExclusionList()}</ul>
 							</div>
 						}
