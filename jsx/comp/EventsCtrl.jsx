@@ -177,6 +177,11 @@ class EventsCtrl extends React.Component {
 							}
 
 						</button>
+						{this.state.excludedEvents.length > 0 &&
+							<span>	Hidden Events <span style={{color:'#ff0000'}}>{this.state.excludedEvents.length}</span></span>
+							
+						}
+						 
 						{this.state.showEventExcluderList &&
 							<div style={{ backgroundColor: 'rgb(200,200,200)' }}>
 								<h2>Click Event to hide Display of event</h2>
