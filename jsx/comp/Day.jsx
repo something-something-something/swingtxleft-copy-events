@@ -4,8 +4,7 @@ class Day extends React.Component {
 			return <Event key={this.props.dayData.day + el.id} event={el} day={this.props.dayData.day} />
 		})
 		return <div>
-			<h1 style={{textAlign:'center',borderWidth:'0 0 0.5em 0',borderStyle:'solid',borderColor:'#34c1f0'}}>{this.props.dayData.day}</h1>
-			<br/>
+			<h1 style={{textAlign:'center',borderWidth:'0 0 18px 0',borderStyle:'solid',borderColor:'#34c1f0',padding:'18px 0 0 0'}}>{this.props.dayData.day}</h1>
 			{events}
 		</div>
 	}
@@ -18,9 +17,9 @@ class Event extends React.Component {
 			linkify:true
 		});
 		let description= markdownIt.render(this.props.event.description);
-		return (<div>
-			<h2><a href={this.props.event.browser_url}>{this.props.event.title}</a></h2>
-			<div>{this.timeList()}</div>
+		return (<div style={{textAlign:'center'}}>
+			<h2 style={{textAlign:'center',padding:'18px 0'}}><a href={this.props.event.browser_url}>{this.props.event.title}</a></h2>
+			<div style={{fontSize:'18px'}}>{this.timeList()}</div>
 			
 		</div>)
 		//<div dangerouslySetInnerHTML={{__html:description}}/>
@@ -182,13 +181,13 @@ class Event extends React.Component {
 class TimeslotMonth extends React.Component {
 
 	render() {
-	return (<div style={{padding:'0.5em 0'}}><u>{this.props.monthData.monthStr} {this.props.monthData.year}:</u> {this.timeslots()}</div>)
+	return (<div>{this.timeslots()}</div>);
 	}
 
 	timeslots() {
 		let dayFormater = new Intl.DateTimeFormat('en-US', {
 			timeZone: this.props.event.timezone,
-			month:'short',
+			month:'long',
 			day: 'numeric'
 
 		});
@@ -205,28 +204,23 @@ class TimeslotMonth extends React.Component {
 			let stDate = new Date(et.start_date * 1000);
 			let edDate = new Date(et.end_date * 1000);
 			if (dayFormater.format(stDate) === dayFormater.format(edDate)) {
-				timeArr.push( {
-					value:(<span key={et.id}> <b>{dayFormater.format(stDate)}</b>  {timeFormater.format(stDate)} -  { timeFormater.format(edDate)}</span>),
-					timeslot:et
-				})
+				timeArr.push(<div ey={et.id}> <b>{dayFormater.format(stDate)}</b>  {timeFormater.format(stDate)} -  { timeFormater.format(edDate)}</div>);
 			}
 			else {
-				timeArr.push({
-				value:(<span  key={et.id}> <b>{dayFormater.format(stDate)}</b>  {timeFormater.format(stDate)}  <b>{dayFormater.format(edDate)}</b>   {timeFormater.format(edDate)}</span>),
-				timeslot:et,
-			})
+				timeArr.push(<div ey={et.id}> <b>{dayFormater.format(stDate)}</b>  {timeFormater.format(stDate)}  <b>{dayFormater.format(edDate)}</b>   {timeFormater.format(edDate)}</div>);
 			}
 		}
-		return timeArr.map((el, index, arr) => {
-			//only last timeslot should have comma
-			if (index !== arr.length - 1) {
-				return <span key={el.timeslot.id}> {el.value}, </span>;
-			}
-			else {
-				return <span key={el.timeslot.id}> {el.value}  </span>;
-			}
+		// return timeArr.map((el, index, arr) => {
+		// 	//only last timeslot should have comma
+		// 	if (index !== arr.length - 1) {
+		// 		return <span key={el.timeslot.id}> {el.value}, </span>;
+		// 	}
+		// 	else {
+		// 		return <span key={el.timeslot.id}> {el.value}  </span>;
+		// 	}
 
-		})
+		// })
+		return timeArr
 		//return timeArr;
 	}
 

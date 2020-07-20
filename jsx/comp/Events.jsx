@@ -83,9 +83,9 @@ class Events extends React.Component {
 		let dayComp = eventDays.map((day) => { return <Day dayData={day} key={day.day} /> })
 		return (<div>
 			<button onClick={this.copyEventsHTML}>Copy Events As HTML (For Mailchimp)</button>
+			{/* <br/>
 			<br/>
-			<br/>
-			<button onClick={this.copyEvents}>Copy Events (Don't Use Alternate Export)</button> 
+			<button onClick={this.copyEvents}>Copy Events (Don't Use Alternate Export)</button>  */}
 			<div ref={this.dayListRef}>{dayComp}</div>
 		</div>);
 		//return <pre>{JSON.stringify(this.props.eventData,null,'\t')}</pre>
