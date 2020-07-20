@@ -204,10 +204,10 @@ class TimeslotMonth extends React.Component {
 			let stDate = new Date(et.start_date * 1000);
 			let edDate = new Date(et.end_date * 1000);
 			if (dayFormater.format(stDate) === dayFormater.format(edDate)) {
-				timeArr.push(<div ey={et.id}> <b>{dayFormater.format(stDate)}</b>  {timeFormater.format(stDate)} -  { timeFormater.format(edDate)}</div>);
+				timeArr.push(<div key={et.id}> <b>{dayFormater.format(stDate)}</b>  {timeFormater.format(stDate)} -  { timeFormater.format(edDate)}</div>);
 			}
 			else {
-				timeArr.push(<div ey={et.id}> <b>{dayFormater.format(stDate)}</b>  {timeFormater.format(stDate)}  <b>{dayFormater.format(edDate)}</b>   {timeFormater.format(edDate)}</div>);
+				timeArr.push(<div key={et.id}> <b>{dayFormater.format(stDate)}</b>  {timeFormater.format(stDate)}  <b>{dayFormater.format(edDate)}</b>   {timeFormater.format(edDate)}</div>);
 			}
 		}
 		// return timeArr.map((el, index, arr) => {
